@@ -48,6 +48,7 @@ class ProductRepositoryTest {
 
         Iterator<Product> productIterator = productRepository.findAll();
         assertTrue(productIterator.hasNext());
+        @SuppressWarnings("unused")
         Product savedProduct = productIterator.next();
         savedProduct = productIterator.next();
         assertFalse(productIterator.hasNext());
