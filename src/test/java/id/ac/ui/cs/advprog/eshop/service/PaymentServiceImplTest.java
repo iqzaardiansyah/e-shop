@@ -5,7 +5,6 @@ import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 import id.ac.ui.cs.advprog.eshop.model.Payment;
 import id.ac.ui.cs.advprog.eshop.enums.OrderStatus;
-import id.ac.ui.cs.advprog.eshop.model.Order;
 import id.ac.ui.cs.advprog.eshop.repository.PaymentRepository;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -27,7 +26,7 @@ class PaymentServiceTest {
         Payment payment1 = new Payment("1", "voucherCode",
             Map.of("voucherCode", "ESHOP1234567890"));
         payments.add(payment1);
-        Payment payment2 = new Payment("2", "BankTransfer",
+        Payment payment2 = new Payment("2", "bankTransfer",
             Map.of("BRI", "1234567890"));
         payments.add(payment2);
     }
@@ -35,23 +34,12 @@ class PaymentServiceTest {
     @Test
     void testCreatePayment() {
         Payment payment = payments.get(1);
-        Order order = new Order(null, null, 0, null);
         doReturn(payment).when(paymentRepository).save(payment);
 
-        Payment result = paymentService.addPayment(order, payment.getMethod(),
-            payment.getPaymentData());
+        Payment result = paymentService.addPayment(payment);
+
         verify(paymentRepository, times(1)).save(payment);
         assertEquals(payment.getId(), result.getId());
-    }
-
-    @Test
-    void testCreatePaymentIfAlreadyExists() {
-        Payment payment = payments.get(1);
-        Order order = new Order(null, null, 0, null);
-        doReturn(payment).when(paymentRepository).findById(payment.getId());
-
-        assertNull(paymentService.addPayment(order, payment.getMethod(), payment.getPaymentData()));
-        verify(paymentRepository, times(0)).save(payment);
     }
 
     @Test
