@@ -1,4 +1,5 @@
 package id.ac.ui.cs.advprog.eshop.model;
+import java.util.Arrays;
 import java.util.List;
 
 import lombok.*;
@@ -8,12 +9,40 @@ import lombok.*;
 public class Order {
     String id;
     List<Product> products;
-    long timestamp;
+    long orderTime;
     String autor;
-    @Setter
     String status;
 
-    public Order(String id, List<Product> products, long timestamp, String author) {}
+    public Order(String id, List<Product> products, long orderTime, String author) {
+        this.id = id;
+        this.orderTime = orderTime;
+        this.autor = author;
+        this.status = "WAITING_PAYMENT";
 
-    public Order(String id, List<Product> products, long timestamp, String author, String status) {}
+        if (products.isEmpty()) {
+            throw new IllegalArgumentException();
+        } else {
+            this.products = products;
+        }
+    }
+
+    public Order(String id, List<Product> products, long timestamp, String author, String status) {
+        this(id, products, timestamp, author);
+        
+        String[] statusList = {"WAITING_PAYMENT", "FAILED", "SUCCESS", "CANCELLED"};
+        if (Arrays.stream(statusList).noneMatch(item -> item.equals(status))) {
+            throw new IllegalArgumentException();
+        } else {
+            this.status = status;
+        }
+    }
+
+    public void setStatus(String status) {
+        String[] statusList = {"WAITING_PAYMENT", "FAILED", "SUCCESS", "CANCELLED"};
+        if (Arrays.stream(statusList).noneMatch(item -> item.equals(status))) {
+            throw new IllegalArgumentException();
+        } else {
+            this.status = status;
+        }
+    }
 }
