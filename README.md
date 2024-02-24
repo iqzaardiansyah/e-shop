@@ -55,7 +55,19 @@ Apply the SOLID principles you have learned. You are allowed to modify the sourc
 3. - **Code Rigidity**: Without OCP, modifying existing code becomes a necessity when extending functionality. This can lead to a rigid codebase that is resistant to changes and introduces a higher risk of introducing bugs.
     - **Maintenance Challenges**: Lack of SRP can result in classes or modules with multiple responsibilities. When changes are required, understanding the impact and making modifications becomes challenging.
     - **Example**: Consider a scenario where a new feature called `CarRating` is to be added to the application and this feature is written inside `CarRepository.java`. This scenario violates SRP because `CarRepository.java` handles two responsibilities namely managing the database and handling car ratings. These violations make the code difficult to read and maintain.
+</details>
 
+<details>
+<summary>Tutorial 4</summary>
+<details>
+<summary>Reflection 1</summary>
 
+1. Reflect based on Percival (2017) proposed self-reflective questions (in “Principles and Best Practice of Testing” submodule, chapter “Evaluating Your Testing Objectives”), whether this TDD flow is useful enough for you or not. If not, explain things that you need to do next time you make more tests.
 
+   After following this week's tutorial, I realized that TDD flow is complicated but must be implemented because by using this flow, it is more likely that errors can be detected during the development stage compared to being detected during the maintain stage.
+
+2. You have created unit tests in Tutorial. Now reflect whether your tests have successfully followed F.I.R.S.T. principle or not. If not, explain things that you need to do the next time you create more tests.
+   
+   In my opinion, the tests that have been created during the tutorial so far have followed the F.I.R.S.T. principle because the tests made so far have covered several possible happy paths and unhappy paths.
+</details>
 </details>
