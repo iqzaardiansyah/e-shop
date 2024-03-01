@@ -2,6 +2,7 @@ package id.ac.ui.cs.advprog.eshop.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import id.ac.ui.cs.advprog.eshop.enums.OrderStatus;
+import id.ac.ui.cs.advprog.eshop.enums.PaymentMethod;
 import id.ac.ui.cs.advprog.eshop.model.Order;
 import id.ac.ui.cs.advprog.eshop.model.Payment;
 import id.ac.ui.cs.advprog.eshop.repository.PaymentRepository;
@@ -15,8 +16,8 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public Payment addPayment(Order order, String method, Map<String, String> paymentData) {
-        if (method.equals("voucherCode") && paymentData.get("voucherCode") != null) {
-            if (paymentData.get("voucherCode").substring(0, 4).equals("ESHOP") && paymentData.get("voucherCode").length() == 16) {
+        if (method.equals(PaymentMethod.VOUCHER_CODE.getValue()) && paymentData.get(PaymentMethod.VOUCHER_CODE.getValue()) != null) {
+            if (voucherCodeValidation(paymentData.get(PaymentMethod.VOUCHER_CODE.getValue()))) {
                 Payment payment = new Payment(String.valueOf(paymentRepository.findAll().size()+1), method, paymentData, OrderStatus.SUCCESS.getValue());
                 paymentRepository.save(payment);
                 return payment;
@@ -25,7 +26,7 @@ public class PaymentServiceImpl implements PaymentService {
                 paymentRepository.save(payment);
                 return payment;
             }
-        } else if (method.equals("bankTransfer")) {
+        } else if (method.equals(PaymentMethod.BANK_TRANSFER.getValue())) {
             if (!paymentData.keySet().isEmpty() && !paymentData.values().isEmpty()) {
                 Payment payment = new Payment(String.valueOf(paymentRepository.findAll().size()+1), method, paymentData, OrderStatus.SUCCESS.getValue());
                 paymentRepository.save(payment);
@@ -65,5 +66,9 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public List<Payment> getAllPayment() {
         return paymentRepository.findAll();
+    }
+
+    public boolean voucherCodeValidation(String voucherCode) {
+        return voucherCode.substring(0, 4).equals(PaymentMethod.ESHOP.getValue()) && voucherCode.length() == 16;
     }
 }

@@ -5,6 +5,7 @@ import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 import id.ac.ui.cs.advprog.eshop.model.Payment;
 import id.ac.ui.cs.advprog.eshop.enums.OrderStatus;
+import id.ac.ui.cs.advprog.eshop.enums.PaymentMethod;
 import id.ac.ui.cs.advprog.eshop.repository.PaymentRepository;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -23,10 +24,10 @@ class PaymentServiceTest {
     @BeforeEach
     void setUp() {
         payments = new ArrayList<>();
-        Payment payment1 = new Payment("1", "voucherCode",
-            Map.of("voucherCode", "ESHOP1234567890"));
+        Payment payment1 = new Payment("1", PaymentMethod.VOUCHER_CODE.getValue(),
+            Map.of(PaymentMethod.VOUCHER_CODE.getValue(), "ESHOP1234567890"));
         payments.add(payment1);
-        Payment payment2 = new Payment("2", "bankTransfer",
+        Payment payment2 = new Payment("2", PaymentMethod.BANK_TRANSFER.getValue(),
             Map.of("BRI", "1234567890"));
         payments.add(payment2);
     }
@@ -74,8 +75,8 @@ class PaymentServiceTest {
         doReturn(null).when(paymentRepository).findById("wkwk");
         
         assertThrows(NoSuchElementException.class, () -> 
-            paymentService.setStatus(new Payment("wkwk", "voucherCode",
-                Map.of("voucherCode", "ESHOP1234567890")), OrderStatus.SUCCESS.getValue())); 
+            paymentService.setStatus(new Payment("wkwk", PaymentMethod.VOUCHER_CODE.getValue(),
+                Map.of(PaymentMethod.VOUCHER_CODE.getValue(), "ESHOP1234567890")), OrderStatus.SUCCESS.getValue())); 
 
         verify(paymentRepository, times(0)).save(any(Payment.class));
     }
