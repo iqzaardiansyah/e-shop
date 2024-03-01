@@ -1,5 +1,6 @@
 package id.ac.ui.cs.advprog.eshop.repository;
 import id.ac.ui.cs.advprog.eshop.enums.OrderStatus;
+import id.ac.ui.cs.advprog.eshop.enums.PaymentMethod;
 import id.ac.ui.cs.advprog.eshop.model.Payment;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,10 +18,10 @@ class PaymentRepositoryTest {
         paymentRepository = new PaymentRepository();
 
         payments = new ArrayList<>();
-        Payment payment1 = new Payment("1", "voucherCode",
-            Map.of("voucherCode", "ESHOP1234567890"));
+        Payment payment1 = new Payment("1", PaymentMethod.VOUCHER_CODE.getValue(),
+            Map.of(PaymentMethod.VOUCHER_CODE.getValue(), "ESHOP1234567890"));
         payments.add(payment1);
-        Payment payment2 = new Payment("2", "BankTransfer",
+        Payment payment2 = new Payment("2", PaymentMethod.BANK_TRANSFER.getValue(),
             Map.of("BRI", "1234567890"));
         payments.add(payment2);
     }
