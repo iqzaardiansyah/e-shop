@@ -69,6 +69,19 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     public boolean voucherCodeValidation(String voucherCode) {
-        return voucherCode.substring(0, 4).equals(PaymentMethod.ESHOP.getValue()) && voucherCode.length() == 16;
+        boolean valid;
+        int counter = 0;
+        valid = voucherCode.substring(0, 4).equals(PaymentMethod.ESHOP.getValue()) && voucherCode.length() == 16;
+        for (char c : voucherCode.toCharArray()) {
+            if (Character.isDigit(c)) {
+                counter++;
+            }
+        }
+        if (counter == 8) {
+            valid = true;
+        } else {
+            valid = false;
+        }
+        return valid;
     }
 }
